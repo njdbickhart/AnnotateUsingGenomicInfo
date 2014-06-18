@@ -24,7 +24,7 @@ import java.util.HashMap;
  */
 public class AnnotationFactory {
     private HashMap<String, String> dbFileList;
-    private BedMap coords;
+    private BedMap<BedAbstract> coords;
     private ArrayList<String> dbs;
     
     

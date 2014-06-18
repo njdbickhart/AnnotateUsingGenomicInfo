@@ -4,6 +4,7 @@
  */
 package annotateusinggenomicinfo;
 
+import file.BedAbstract;
 import file.BedMap;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class CNAssociator {
         animals = filelist.keySet();
     }
     
-    public void Association(HashMap<String, BedMap> genes){
+    public void Association(HashMap<String, BedMap<BedAbstract>> genes){
         int threads = 3;
         if(filelist.keySet().size() < 3){
             threads = filelist.keySet().size();

@@ -36,10 +36,10 @@ import jxl.write.WriteException;
  * @author bickhart
  */
 public class OutputSecondExcel {
-    private BedMap CNVR;
-    private HashMap<String, BedMap> genes;
+    private BedMap<BedAbstract> CNVR;
+    private HashMap<String, BedMap<BedAbstract>> genes;
     
-    public OutputSecondExcel(BedMap CNVR, HashMap<String, BedMap> genes){
+    public OutputSecondExcel(BedMap<BedAbstract> CNVR, HashMap<String, BedMap<BedAbstract>> genes){
         this.CNVR = CNVR;
         this.genes = genes;
     }

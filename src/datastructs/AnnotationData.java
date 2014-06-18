@@ -41,7 +41,6 @@ public class AnnotationData {
         }else if(n.isEmpty()){
             return null;
         }else{
-            Collections.sort((ArrayList<String>)n);
             String retStr = n.get(0).toString();
             for(int x = 1; x < n.size(); x++){
                 retStr += ";" + n.get(x).toString();

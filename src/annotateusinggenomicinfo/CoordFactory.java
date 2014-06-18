@@ -28,11 +28,11 @@ import java.util.Set;
  */
 public class CoordFactory {
     private String[] headers;
-    private BedMap coords;
+    private BedMap<BedAbstract> coords;
     private String filename;
     
     public CoordFactory(String input, String indiv){
-        this.coords = new BedMap();
+        this.coords = new BedMap<BedAbstract>();
         this.filename = indiv;
         LoadValueFile(input);
     }

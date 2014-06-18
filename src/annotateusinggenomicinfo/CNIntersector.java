@@ -23,8 +23,8 @@ import utils.LineIntersect;
 public class CNIntersector extends LineIntersect implements Runnable{
     private String cnfile;
     private String indiv;
-    private HashMap<String, BedMap> genes;
-    public CNIntersector(String cnfile, String indiv, HashMap<String, BedMap> genes){
+    private HashMap<String, BedMap<BedAbstract>> genes;
+    public CNIntersector(String cnfile, String indiv, HashMap<String, BedMap<BedAbstract>> genes){
         this.cnfile = cnfile;
         this.indiv = indiv;
         this.genes = genes;
@@ -46,7 +46,7 @@ public class CNIntersector extends LineIntersect implements Runnable{
         System.out.print(this.indiv + " ");
     }
     
-    private void intersectCN(String indiv, BedMap a, String chr, String start, String end, String value){
+    private void intersectCN(String indiv, BedMap<BedAbstract> a, String chr, String start, String end, String value){
         int s = Integer.valueOf(start);
         int e = Integer.valueOf(end);
         double v = Double.valueOf(value);

@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author bickhart
  */
-public class AnnotationMap extends BedMap{
+public class AnnotationMap extends BedMap<BedAbstract>{
     
     public void addBedData(BedSimple bed){
        String chr = bed.Chr();

@@ -4,6 +4,7 @@
  */
 package annotateusinggenomicinfo;
 
+import file.BedAbstract;
 import file.BedMap;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,9 +26,9 @@ public class AnnotateUsingGenomicInfo {
         for(String name : cmd.intersectionbed.keySet()){
             coordlist.add(new CoordFactory(cmd.intersectionbed.get(name), name));
         }
-        BedMap CNVRs = null;
+        BedMap<BedAbstract> CNVRs = null;
         // Do CNVR intersection
-        BedMap CNVS = new BedMap();
+        BedMap<BedAbstract> CNVS = new BedMap<BedAbstract>();
         for(CoordFactory c : coordlist){
             CNVS.combineBedMaps(c.getModCoords());
         }
@@ -59,7 +60,7 @@ public class AnnotateUsingGenomicInfo {
                 OutputText out = new OutputText(c);
                 out.PrintToFile(cmd.outputfile + ".anno", dblist);
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
-                HashMap<String, BedMap> genes = gf.GetGeneMaps();
+                HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
                 OutputSecondExcel out2 = new OutputSecondExcel(CNVRs, genes);
                 out2.JustCNVRs(cmd.outputfile, dblist);
             }
@@ -67,7 +68,7 @@ public class AnnotateUsingGenomicInfo {
                 // Do gene CN intersections
                 System.out.println("Working on gene CN intersections...");
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
-                HashMap<String, BedMap> genes = gf.GetGeneMaps();
+                HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
                 
                 CNAssociator assoc = new CNAssociator(cmd.cnfilelist);
                 assoc.Association(genes);
@@ -95,7 +96,7 @@ public class AnnotateUsingGenomicInfo {
                 // Do gene CN intersections
                 System.out.println("Working on gene CN intersections...");
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
-                HashMap<String, BedMap> genes = gf.GetGeneMaps();
+                HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
                 
                 CNAssociator assoc = new CNAssociator(cmd.cnfilelist);
                 assoc.Association(genes);

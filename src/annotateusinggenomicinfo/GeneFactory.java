@@ -5,6 +5,7 @@
 package annotateusinggenomicinfo;
 
 import datastructs.GeneBed;
+import file.BedAbstract;
 import file.BedMap;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,8 +40,8 @@ public class GeneFactory {
         }
     }
     
-    public HashMap<String, BedMap> GetGeneMaps(){
-        HashMap<String, BedMap> genes = new HashMap<>();
+    public HashMap<String, BedMap<BedAbstract>> GetGeneMaps(){
+        HashMap<String, BedMap<BedAbstract>> genes = new HashMap<>();
         for(String db : dbFileList.keySet()){
             String file = dbFileList.get(db);
             try(BufferedReader input = Files.newBufferedReader(Paths.get(file), Charset.defaultCharset())){
