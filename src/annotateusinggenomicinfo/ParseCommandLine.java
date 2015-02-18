@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
@@ -24,11 +25,11 @@ public class ParseCommandLine {
     public boolean text = false;
     public boolean cnintersect = false;
     public String usage = "java -jar AnnotateUsingGenomicInfo "
-            + System.lineSeparator() + "\t-d <dbfile list> "
-            + System.lineSeparator() + "\t-i <list of beds to intersect, or single bed file> "
-            + System.lineSeparator() + "\t-c <list of cn files[optional]> "
-            + System.lineSeparator() + "\t-o <output file name> "
-            + System.lineSeparator() + "\t-t <boolean: print to text>";
+            + System.lineSeparator() + "\t-d <dbfile list> DBFiles are tab delimited, BED format files with string names in the fourth column "
+            + System.lineSeparator() + "\t-i <list of files to intersect, or single input file> Supported files: BED, RAPTR-SV, DELLY/DUPPY, CN.MOPS"
+            + System.lineSeparator() + "\t-c <list of genome window files [optional]> For each sample, you can input BED files with floating point values"
+            + System.lineSeparator() + "\t-o <output file base name> The prefix that will be added to all output files"
+            + System.lineSeparator() + "\t-t <boolean: print to text [optional]> Will print all output to individual tab delimited files instead of a spreadsheet ";
     
     public ParseCommandLine(String[] args){
         for (int i = 0; i < args.length; i++){
@@ -72,7 +73,8 @@ public class ParseCommandLine {
                     this.intersectionbed.put(segs[1], segs[0]);
                 }                
             }else if(segs.length > 2 && segs.length < 12){
-                this.intersectionbed.put(input, input);
+                Path temp = Paths.get(input);
+                this.intersectionbed.put(temp.getFileName().toString(), input);
             }else{
                 System.out.println("Input file is improperly formatted!");
                 System.out.println("Please use a tab delimited format with <file\tindividual>");

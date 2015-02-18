@@ -8,7 +8,6 @@ import file.BedAbstract;
 import file.BedMap;
 import java.util.ArrayList;
 import java.util.HashMap;
-import utils.BedMerge;
 
 /**
  *
@@ -58,7 +57,7 @@ public class AnnotateUsingGenomicInfo {
         if(cmd.text){
             for(CoordFactory c : coordlist){
                 OutputText out = new OutputText(c);
-                out.PrintToFile(cmd.outputfile + ".anno", dblist);
+                out.PrintToFile(cmd.outputfile + "." + c.getFileName() + ".anno", dblist);
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
                 HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
                 OutputSecondExcel out2 = new OutputSecondExcel(CNVRs, genes);
@@ -66,7 +65,7 @@ public class AnnotateUsingGenomicInfo {
             }
             if(cmd.cnintersect){
                 // Do gene CN intersections
-                System.out.println("Working on gene CN intersections...");
+                System.out.println("Working on db window value intersections...");
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
                 HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
                 
@@ -85,7 +84,7 @@ public class AnnotateUsingGenomicInfo {
             }
             OutputExcel out = new OutputExcel(coordhash);
             out.PrintToFile(cmd.outputfile + "_anno.xls", dblist);
-            System.out.println("Created individual CNV annotation spreadsheet: " + cmd.outputfile + "_anno.xls");
+            System.out.println("Created individual region annotation spreadsheet: " + cmd.outputfile + "_anno.xls");
             
             for(CoordFactory c : coordlist){
                 c.close();
@@ -94,7 +93,7 @@ public class AnnotateUsingGenomicInfo {
             // Now for the other excel spreadsheet with the CNVRs and gene CN lists
             if(cmd.cnintersect){
                 // Do gene CN intersections
-                System.out.println("Working on gene CN intersections...");
+                System.out.println("Working on db window value intersections...");
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
                 HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
                 
@@ -104,7 +103,7 @@ public class AnnotateUsingGenomicInfo {
                 System.out.println("Working on Excel output...");
                 OutputSecondExcel out2 = new OutputSecondExcel(CNVRs, genes);
                 ArrayList<String> sortedans = assoc.getSortedAnimals();
-                out2.PrintToFile(cmd.outputfile + "_cnvr_genetable.xls", dblist, sortedans);
+                out2.PrintToFile(cmd.outputfile + "_windows_genetable.xls", dblist, sortedans);
             }
         }
     }

@@ -5,7 +5,6 @@
 package annotateusinggenomicinfo;
 
 import datastructs.BedCoord;
-import datastructs.Coord;
 import datastructs.GeneBed;
 import file.BedAbstract;
 import file.BedMap;
@@ -17,9 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
-import jxl.SheetSettings;
 import jxl.Workbook;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
@@ -49,12 +46,12 @@ public class OutputSecondExcel {
         ArrayList<BedCoord> orderedList = OrderCNVRS();
         int i = 0;
         ArrayList<String> cnvhead = new ArrayList<>();
-        cnvhead.add("CNVR#");
+        cnvhead.add("Region#");
         cnvhead.add("chr");
         cnvhead.add("start");
         cnvhead.add("end");
-        cnvhead.add("#animals");
-        cnvhead.add("animals");
+        cnvhead.add("#samples");
+        cnvhead.add("samples");
         
         
         for(int x = 0; x < sorteddbs.size(); x++){
@@ -63,7 +60,7 @@ public class OutputSecondExcel {
             cnvhead.add("%ovlp-" + sorteddbs.get(x));
             
         }
-        try(BufferedWriter cnvrs = Files.newBufferedWriter(Paths.get(outbase + "_cnvrs.tab"), Charset.defaultCharset())){
+        try(BufferedWriter cnvrs = Files.newBufferedWriter(Paths.get(outbase + "_regions.tab"), Charset.defaultCharset())){
             printTabTextLine(cnvhead, cnvrs);
             for(BedCoord b : orderedList){
                 ArrayList<String> vals = b.formatOutArrayCNVR(sorteddbs);
@@ -81,12 +78,12 @@ public class OutputSecondExcel {
         ArrayList<BedCoord> orderedList = OrderCNVRS();
         int i = 0;
         ArrayList<String> cnvhead = new ArrayList<>();
-        cnvhead.add("CNVR#");
+        cnvhead.add("Region#");
         cnvhead.add("chr");
         cnvhead.add("start");
         cnvhead.add("end");
-        cnvhead.add("#animals");
-        cnvhead.add("animals");
+        cnvhead.add("#samples");
+        cnvhead.add("samples");
         
         
         for(int x = 0; x < sorteddbs.size(); x++){
@@ -95,7 +92,7 @@ public class OutputSecondExcel {
             cnvhead.add("%ovlp-" + sorteddbs.get(x));
             
         }
-        try(BufferedWriter cnvrs = Files.newBufferedWriter(Paths.get(outbase + "_cnvrs.tab"), Charset.defaultCharset())){
+        try(BufferedWriter cnvrs = Files.newBufferedWriter(Paths.get(outbase + "_regions.tab"), Charset.defaultCharset())){
             printTabTextLine(cnvhead, cnvrs);
             for(BedCoord b : orderedList){
                 ArrayList<String> vals = b.formatOutArrayCNVR(sorteddbs);
@@ -107,7 +104,7 @@ public class OutputSecondExcel {
         }
         
         //Now for the cn values;
-        System.out.print("Working on cn tables for CNVR spreadsheet for... ");
+        System.out.print("Working on cn tables for Region spreadsheet for... ");
         for(String fname : this.genes.keySet()){
             System.out.print(fname + " ");
             String sname = sanitizeString(fname);
@@ -121,8 +118,8 @@ public class OutputSecondExcel {
             info.add("chr");
             info.add("start");
             info.add("end");
-            info.add("CNVRoverlap");
-            info.add("CNVRintersections");
+            info.add("RegionOverlap");
+            info.add("RegionIntersections");
             
             for(int x = 0; x < cnnames.size(); x++){
                 info.add(cnnames.get(x));
@@ -130,7 +127,7 @@ public class OutputSecondExcel {
             }
 
             // Print out data
-            try(BufferedWriter out = Files.newBufferedWriter(Paths.get(outbase + "_cngenes_" + fname + ".tab"), Charset.defaultCharset())){
+            try(BufferedWriter out = Files.newBufferedWriter(Paths.get(outbase + "_windows_" + fname + ".tab"), Charset.defaultCharset())){
                 printTabTextLine(info, out);
                 for(String chr : sortedchrs){
                     for(BedAbstract b : genes.get(fname).getSortedBedAbstractList(chr)){
@@ -163,8 +160,8 @@ public class OutputSecondExcel {
             // Returns: # chr start end #animals animals dbs
             ArrayList<BedCoord> orderedList = OrderCNVRS();
             int i = 0;
-            WritableSheet cnvrsheet = workbook.createSheet("CNVRs", i);
-            String[] cnvhead = {"CNVR#", "chr", "start", "end", "#animals", "animals"};
+            WritableSheet cnvrsheet = workbook.createSheet("Regions", i);
+            String[] cnvhead = {"Region#", "chr", "start", "end", "#animals", "animals"};
             for(int x = 0; x < cnvhead.length; x++){
                 writeString(cnvrsheet, x, 0, cnvhead[x], header);
             }
@@ -187,7 +184,7 @@ public class OutputSecondExcel {
             cnvrsheet.getSettings().setHorizontalFreeze(0);
             
             // Now for the Gene CN tables
-            System.out.print("Working on cn tables for CNVR spreadsheet for... ");
+            System.out.print("Working on window tables spreadsheet for... ");
             for(String fname : this.genes.keySet()){
                 System.out.print(fname + " ");
                 String sname = sanitizeString(fname);
@@ -196,7 +193,7 @@ public class OutputSecondExcel {
                 ArrayList<String> sortedchrs = utils.SortByChr.ascendingChr(chrset);
                 
                 // Create headers
-                String[] info = {"gene", "chr", "start", "end", "CNVRoverlap", "CNVRintersections"};
+                String[] info = {"gene", "chr", "start", "end", "RegionOverlap", "RegionIntersections"};
                 for(int x = 0; x < info.length; x++){
                     writeString(sheet, x, 0, info[x], header);
                 }

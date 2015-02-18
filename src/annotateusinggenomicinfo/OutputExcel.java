@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
-import jxl.SheetSettings;
 import jxl.Workbook;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
