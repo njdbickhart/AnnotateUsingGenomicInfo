@@ -70,6 +70,9 @@ public class ParseCommandLine {
                 while((line = in.readLine()) != null){
                     line = line.trim();
                     segs = line.split("\t");
+                    if(segs.length < 2){
+                        continue;
+                    }
                     this.intersectionbed.put(segs[1], segs[0]);
                 }                
             }else if(segs.length > 2 && segs.length < 12){
