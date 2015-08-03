@@ -25,7 +25,7 @@ public class ParseCommandLine {
     public boolean text = false;
     public boolean cnintersect = false;
     public String usage = "java -jar AnnotateUsingGenomicInfo "
-            + System.lineSeparator() + "Version 0.0.2"
+            + System.lineSeparator() + "Version 0.0.3"
             + System.lineSeparator() + "\t-d <dbfile list> DBFiles are tab delimited, BED format files with string names in the fourth column "
             + System.lineSeparator() + "\t-i <list of files to intersect, or single input file> Supported files: BED, RAPTR-SV, DELLY/DUPPY, CN.MOPS"
             + System.lineSeparator() + "\t-c <list of genome window files [optional]> For each sample, you can input BED files with floating point values"
