@@ -60,6 +60,8 @@ public class AnnotateUsingGenomicInfo {
                 out.PrintToFile(cmd.outputfile + "." + c.getFileName() + ".anno", dblist);
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
                 HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
+                //genes.put("CNVRs", new BedMap<BedAbstract>());
+                //genes.get("CNVRs").combineBedMaps(CNVRs);
                 OutputSecondExcel out2 = new OutputSecondExcel(CNVRs, genes);
                 out2.JustCNVRs(cmd.outputfile, dblist);
             }
@@ -67,7 +69,7 @@ public class AnnotateUsingGenomicInfo {
                 // Do gene CN intersections
                 System.out.println("Working on db window value intersections...");
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
-                HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
+                HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps(CNVRs);
                 
                 CNAssociator assoc = new CNAssociator(cmd.cnfilelist);
                 assoc.Association(genes);
@@ -95,7 +97,9 @@ public class AnnotateUsingGenomicInfo {
                 // Do gene CN intersections
                 System.out.println("Working on db window value intersections...");
                 GeneFactory gf = new GeneFactory(cmd.dbfilelist);
-                HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps();
+                HashMap<String, BedMap<BedAbstract>> genes = gf.GetGeneMaps(CNVRs);
+                //genes.put("CNVRs", new BedMap<BedAbstract>());
+                //genes.get("CNVRs").combineBedMaps(CNVRs);
                 
                 CNAssociator assoc = new CNAssociator(cmd.cnfilelist);
                 assoc.Association(genes);

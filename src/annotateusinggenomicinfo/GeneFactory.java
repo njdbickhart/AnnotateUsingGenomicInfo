@@ -40,6 +40,33 @@ public class GeneFactory {
         }
     }
     
+    public HashMap<String, BedMap<BedAbstract>> GetGeneMaps(BedMap<BedAbstract> cnvrs){
+        HashMap<String, BedMap<BedAbstract>> genes = new HashMap<>();
+        for(String db : dbFileList.keySet()){
+            String file = dbFileList.get(db);
+            try(BufferedReader input = Files.newBufferedReader(Paths.get(file), Charset.defaultCharset())){
+                String line;
+                genes.put(db, new BedMap());
+                BedMap working = genes.get(db);
+                while((line = input.readLine()) != null){
+                    String[] segs = line.split("\t");
+                    working.addBedData(new GeneBed(segs[0], segs[1], segs[2], segs[3]));
+                }
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
+        }
+        
+        // Now, add the CNVR coordinates in exhaustive fashion
+        genes.put("CNVRs", new BedMap());
+        for(String chr : cnvrs.getListChrs()){
+            for(BedAbstract b : cnvrs.getSortedBedAbstractList(chr)){
+                genes.get("CNVRs").addBedData(new GeneBed(b.Chr(), String.valueOf(b.Start()), String.valueOf(b.End()), b.Name()));
+            }
+        }
+        return genes;
+    }
+    
     public HashMap<String, BedMap<BedAbstract>> GetGeneMaps(){
         HashMap<String, BedMap<BedAbstract>> genes = new HashMap<>();
         for(String db : dbFileList.keySet()){
